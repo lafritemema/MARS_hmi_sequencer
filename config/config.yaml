@@ -1,0 +1,6 @@
+backend:
+  host: localhost
+  port: 4002
+frontend:
+  host: localhost
+  port: 4003

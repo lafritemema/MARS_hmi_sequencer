@@ -1,0 +1,15 @@
+{
+  "short_name": "Sequencer HMI",
+  "name": "MARS sequencer HMI",
+  "icons": [
+    {
+      "src": "robotic-arm-53.png",
+      "type": "image/png",
+      "sizes": "53x553"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

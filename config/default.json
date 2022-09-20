@@ -1,0 +1,21 @@
+{
+    "server": {
+        "host" : "localhost",
+        "port" : 4005
+    },
+    "rabbitMq": {
+        "url": "amqp://debianvm",
+        "exchange": "mars"
+    },
+    "mongoDB": {
+        "url": "mongodb://debianvm:27017"
+    },
+    "rabbitMQRouting": {
+        "opts":[
+            { "header":{ "publisher" : "sequencer", "path" : "/sequencer/manipulation", "x-match": "all" }, "routing_key":"request.hmi"}, 
+            { "header":{ "publisher" : "sequencer", "path" : "/sequencer/error", "x-match": "all" }, "routing_key":"request.hmi"}, 
+            { "header":{ "publisher" : "build_processorHMI", "path" : "/hmi/reset", "x-match": "all" }, "routing_key":"hmi.update"},
+            { "header":{ "publisher" : "build_processorHMI", "path" : "/hmi/manipulation/response", "x-match": "all" }, "routing_key":"hmi.update"}
+        ]
+    }
+}
