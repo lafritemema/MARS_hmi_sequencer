@@ -1,1 +1,4 @@
 
+[submodule "sequencer-hmi-back/src/server"]
+	path = sequencer-hmi-back/src/server
+	url = https://github.com/lafritemema/MARS_typescript_server.git
