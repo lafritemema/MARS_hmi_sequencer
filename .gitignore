@@ -1,7 +1,10 @@
 # dependencies
 sequencer-hmi-front/node_modules
 sequencer-hmi-front/.env
-sequencer-hmi-back
+sequencer-hmi-back/node_modules
+sequencer-hmi-back/.env
+sequencer-hmi-back/routes
+sequencer-hmi-back/config/default.json
 
 
 

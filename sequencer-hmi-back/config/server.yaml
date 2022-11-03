@@ -1,0 +1,15 @@
+default:
+  amqp:
+    type: 'rabbitmq'
+    host: 'debianvm'
+    port: 5672
+    exchange: 
+      name: 'mars'
+      type: 'topic'
+  http:
+    port: 4005
+    host: 'localhost'
+  redis:
+    host: 'debianvm'
+    port: 6379
+    database: 0
