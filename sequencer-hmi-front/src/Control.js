@@ -1,5 +1,5 @@
 import {Button} from "@mui/material";
-import {PlayArrow, Pause, Stop} from "@mui/icons-material";
+import {PlayArrow, Pause, Stop, CloudUpload} from "@mui/icons-material";
 
 function Control (props) {
   
@@ -9,6 +9,13 @@ function Control (props) {
 
   return (
     <div>
+      <Button sx={style}
+              variant="contained"
+              startIcon={<CloudUpload />}
+              disabled={!props.control.load}
+              onClick={props.loadAction}>
+        LOAD SEQUENCE
+      </Button>
       <Button sx={style}
               variant="contained"
               startIcon={<PlayArrow />}

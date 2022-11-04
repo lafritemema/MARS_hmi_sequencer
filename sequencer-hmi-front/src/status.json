@@ -5,6 +5,7 @@
       "message":"The sequencer service is disconnected"
     },
     "control":{
+      "load":false,
       "run":false,
       "pause":false,
       "stop":false
@@ -13,10 +14,23 @@
   "ready":{
     "dialog":{
       "severity":"info",
-      "message":"The sequencer is ready to run a sequence"
+      "message":"The sequencer is ready to run the sequence"
     },
     "control":{
+      "load":false,
       "run":true,
+      "pause":false,
+      "stop":false
+    }
+  },
+  "waiting":{
+    "dialog":{
+      "severity":"info",
+      "message":"The sequencer is waiting for a new sequence"
+    },
+    "control":{
+      "load":true,
+      "run":false,
       "pause":false,
       "stop":false
     }
@@ -27,6 +41,7 @@
       "message":"The sequencer is running a sequence"
     },
     "control":{
+      "load":false,
       "run":false,
       "pause":true,
       "stop":true
@@ -38,6 +53,7 @@
       "message":"The sequence is in pause, click on run to continue or stop to abort"
     },
     "control":{
+      "load":false,
       "run":true,
       "pause":false,
       "stop":true
@@ -49,6 +65,7 @@
       "message":"The sequence was abort put the robot in a safe mode with the pendant and rearm it before to run a new sequence"
     },
     "control":{
+      "load":false,
       "run":false,
       "pause":false,
       "stop":false

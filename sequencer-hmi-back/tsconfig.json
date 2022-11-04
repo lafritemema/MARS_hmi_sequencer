@@ -13,7 +13,8 @@
     "noStrictGenericChecks" : true,
     "baseUrl": ".",
     "paths": {
-      "@server/*":["src/server/*"]
+      "@server/*":["src/server/*"],
+      "@common/*":["src/common/*"]
       }
   },
   "include": ["src/**/*"],
