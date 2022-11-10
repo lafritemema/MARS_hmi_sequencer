@@ -2,7 +2,6 @@
 
 import process from 'node:process';
 import { Server as SockioServer, Socket } from "socket.io";
-import * as dotenv from 'dotenv';
 import { loadAsync } from 'node-yaml-config';
 import {AMQPClient} from './server/amqp';
 import express, {Request, Response} from 'express';
@@ -13,7 +12,7 @@ import { RedisClientType } from '@redis/client';
 import { createServer } from "http";
 import Logger from '@common/logger';
 import cors from 'cors';
-import { stringify } from 'node:querystring';
+import assert from 'node:assert';
 
 
 const CONFIG_FOLDER = process.cwd() + '/config';
@@ -37,8 +36,6 @@ const LOGGER = new Logger("HMI Sequencer");
 // import rabbitmq_consumers from "./services/message_broker/rabbitmq_consumers";
 // import MongoPool from "./services/db/dbConn";
 // import socketInstance from "./services/socket/socketInstance";
-
-dotenv.config()
 // const FILE = "App.js";
 
 // const TOPICS = ['request.hmi', "hmi.update"];
@@ -53,7 +50,11 @@ const RESPONSE_TOPICS = 'response.hmi.sequencer';
 
 loadAsync(CONFIG_FOLDER + '/server.yaml')
   .then(async (serverConfig:ServerConfiguration)=>{
-    const {redis, http, amqp} = serverConfig;
+    const {redis, amqp} = serverConfig;
+
+    const HOST = process.env.HOST;
+    const PORT = parseInt(process.env.PORT);
+    assert(HOST && PORT, 'Missing environment variable HOST or PORT')
 
     LOGGER.try('init redis clients');
     // init redis client
@@ -126,10 +127,10 @@ loadAsync(CONFIG_FOLDER + '/server.yaml')
     });
 
     LOGGER.success('init socketIO server');
-    
+
     // start to listening on http
-    httpServer.listen(http.port, http.host, ()=>{
-      LOGGER.info(`http server listening on port ${http.port}`);
+    httpServer.listen(PORT, HOST, ()=>{
+      LOGGER.info(`http server listening on port ${PORT}`);
     });
 
     LOGGER.info('connect AMPQ Client');

@@ -6,9 +6,6 @@ default:
     exchange: 
       name: 'mars'
       type: 'topic'
-  http:
-    port: 4005
-    host: 'localhost'
   redis:
     host: 'debianvm'
     port: 6379
