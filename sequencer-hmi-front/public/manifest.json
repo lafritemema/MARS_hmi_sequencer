@@ -1,6 +1,6 @@
 {
-  "short_name": "Sequencer HMI",
-  "name": "MARS sequencer HMI",
+  "short_name": "Build Process HMI",
+  "name": "MARS Build Process HMI",
   "icons": [
     {
       "src": "robotic-arm-53.png",

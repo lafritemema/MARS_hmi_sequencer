@@ -34,7 +34,7 @@ function App(props){
             });
 
             socket.on('modeUpdate', (mode)=>{
-                const isChecked = mode == 'step' ? true : false;
+                const isChecked = mode === 'step' ? true : false;
                 setDebugChecked(isChecked);
             })
 
@@ -58,7 +58,7 @@ function App(props){
             socket.connect();
 
             return () => {
-                socket.off('connect');
+                // socket.off('connect');
                 socket.off('disconnect');
                 // socket.off('pong');
             }

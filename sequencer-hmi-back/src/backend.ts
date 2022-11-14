@@ -212,7 +212,8 @@ async function sendToSequencer(request,response, next) {
     RESPONSE_TOPICS);
   
   if (amqpResponse.status != 200) {
-      // emit an error
+    // TODO  
+    // emit an error
   }
 
   response.send('done');
