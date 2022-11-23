@@ -42,11 +42,16 @@ const LOGGER = new Logger("HMI Sequencer");
 // const NAME = 'sequencerHMI';
 
 // declare constants relative to sequencer servivce
-const SEQUENCER_REQUEST_TOPIC = 'request.sequencer';
-const SEQUENCER_KEYSPACE_STATUS = 'mars.sequencer.status';
-const SEQUENCER_KEYSPACE_MODE = 'mars.sequencer.mode';
-const RESPONSE_TOPICS = 'response.hmi.sequencer';
 
+const enum KEYSPACE {
+  STATUS = 'mars.sequencer.status',
+  MODE = 'mars.sequencer.mode'
+}
+
+const enum TOPIC {
+  REQUEST = 'request.sequencer',
+  RESPONSE = 'response.hmi.sequencer'
+}
 
 loadAsync(CONFIG_FOLDER + '/server.yaml')
   .then(async (serverConfig:ServerConfiguration)=>{
@@ -69,8 +74,8 @@ loadAsync(CONFIG_FOLDER + '/server.yaml')
     await redisClient.connect();
     const [status, mode] = await redisClient
         .multi()
-        .get(SEQUENCER_KEYSPACE_STATUS)
-        .get(SEQUENCER_KEYSPACE_MODE)
+        .get(KEYSPACE.STATUS)
+        .get(KEYSPACE.MODE)
         .exec();
  
     sequencerMode = <string|null> mode;
@@ -81,7 +86,7 @@ loadAsync(CONFIG_FOLDER + '/server.yaml')
     // connect it
     pubsubStatusClient.connect();
     // and listen sequencer status
-    pubsubStatusClient.subscribe('__keyspace@0__:'+SEQUENCER_KEYSPACE_STATUS,
+    pubsubStatusClient.subscribe('__keyspace@0__:'+KEYSPACE.STATUS,
         updateSequencerStatus);
 
     // init pubsub client listening status
@@ -89,7 +94,7 @@ loadAsync(CONFIG_FOLDER + '/server.yaml')
     // connect it
     pubsubModeClient.connect();
     // and listen sequencer status
-    pubsubModeClient.subscribe('__keyspace@0__:'+SEQUENCER_KEYSPACE_MODE,
+    pubsubModeClient.subscribe('__keyspace@0__:'+KEYSPACE.MODE,
         updateSequencerMode);
     
     LOGGER.success('init redis clients');
@@ -106,7 +111,7 @@ loadAsync(CONFIG_FOLDER + '/server.yaml')
             amqp.port,
             amqp.exchange);
     // configure amqp client
-    amqpClient.listen(RESPONSE_TOPICS);
+    amqpClient.listen(TOPIC.RESPONSE);
     LOGGER.success('init amqp client');
 
     LOGGER.try('init socketIO server');
@@ -207,9 +212,9 @@ async function sendToSequencer(request,response, next) {
 
   const requestMessage = response.locals.message;
 
-  const amqpResponse = await amqpClient.request(SEQUENCER_REQUEST_TOPIC,
+  const amqpResponse = await amqpClient.request(TOPIC.REQUEST,
     requestMessage,
-    RESPONSE_TOPICS);
+    TOPIC.RESPONSE);
   
   if (amqpResponse.status != 200) {
     // TODO  
@@ -222,7 +227,7 @@ async function sendToSequencer(request,response, next) {
 async function updateSequencerStatus(event:string) {
   switch (event) {
     case 'set':
-      sequencerStatus = <string> await redisClient.get(SEQUENCER_KEYSPACE_STATUS);
+      sequencerStatus = <string> await redisClient.get(KEYSPACE.STATUS);
       LOGGER.info(`sequencer status change to ${sequencerStatus}`);
       socketIO.emit('statusUpdate', sequencerStatus);
       break;
@@ -238,7 +243,7 @@ async function updateSequencerStatus(event:string) {
 async function updateSequencerMode(event:string) {
   switch (event) {
     case 'set':
-      sequencerMode = <string> await redisClient.get(SEQUENCER_KEYSPACE_MODE);
+      sequencerMode = <string> await redisClient.get(KEYSPACE.MODE);
       LOGGER.info(`sequencer mode change to ${sequencerMode}`);
       socketIO.emit('modeUpdate', sequencerMode);
       break;
