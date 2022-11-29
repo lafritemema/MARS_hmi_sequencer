@@ -20,7 +20,7 @@
       "load":false,
       "run":true,
       "pause":false,
-      "stop":false
+      "stop":true
     }
   },
   "waiting":{

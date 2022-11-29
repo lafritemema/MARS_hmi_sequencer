@@ -125,6 +125,7 @@ loadAsync(CONFIG_FOLDER + '/server.yaml')
     socketIO.on('connection', (socket:Socket)=>{
       // status update
       // if (sequencerStatus) socket.emit('statusUpdate', sequencerStatus);
+      console.log('connected to socket :'+ socket.id);
       socket.on('getStates', ()=>{
         socket.emit('statusUpdate', sequencerStatus);
         socket.emit('modeUpdate', sequencerMode);
