@@ -3,7 +3,10 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 // import {loadAsync} from 'node-yaml-config'
 
+const ENDPOINT = process.env.BACKENDPOINT ?
+    process.env.BACKENDPOINT :
+    process.env.REACT_APP_BACKENDPOINT
 
 const root = ReactDOM
-  .createRoot(document.getElementById("root"));
-root.render(<App endpoint={process.env.REACT_APP_BACKENDPOINT}/>);
+  .createRoot(document.getElementById("app"));
+root.render(<App endpoint={ENDPOINT}/>);

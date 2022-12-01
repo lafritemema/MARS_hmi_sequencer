@@ -1,8 +1,7 @@
 
-import { useState, useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 import Control from './Control';
 import Dialog from './Dialog';
-import {FormControlLabel, Switch} from "@mui/material";
 import io from "socket.io-client";
 import seqStatus from './status.json';
 
@@ -139,16 +138,12 @@ function App(props){
                 loadAction={handleLoad}
                 runAction={handleRun}
                 pauseAction={handlePause}
-                stopAction={handleStop}/>
+                stopAction={handleStop}
+                modeChangeAction={handleModeChange}
+                debugMode={debugChecked}/>
             <Dialog 
                 severity={dialog.severity}
                 message={dialog.message} />
-            <FormControlLabel control={
-                <Switch
-                    checked={debugChecked}
-                    onChange={handleModeChange}
-                    inputProps={{ 'aria-label': 'controlled' }}/>}
-                label = "DEBUG MODE" />
         </div>
     )
 }

@@ -1,42 +1,62 @@
-import {Button} from "@mui/material";
+import React from 'react';
+import {Button, FormControlLabel, Switch} from "@mui/material";
 import {PlayArrow, Pause, Stop, CloudUpload} from "@mui/icons-material";
 
-function Control (props) {
+function Control ({control,
+    loadAction,
+    runAction,
+    pauseAction,
+    stopAction,
+    modeChangeAction,
+    debugMode}) {
   
   const style = {
-    margin: '5px',
+    button:{
+      margin: '5px'
+    },
+    switch: {
+      margin: '5px'
+    }
   }
+
+
 
   return (
     <div>
-      <Button sx={style}
+      <Button sx={style.button}
               variant="contained"
               startIcon={<CloudUpload />}
-              disabled={!props.control.load}
-              onClick={props.loadAction}>
+              disabled={!control.load}
+              onClick={loadAction}>
         LOAD SEQUENCE
       </Button>
-      <Button sx={style}
+      <Button sx={style.button}
               variant="contained"
               startIcon={<PlayArrow />}
-              disabled={!props.control.run}
-              onClick={props.runAction}>
+              disabled={!control.run}
+              onClick={runAction}>
         RUN
       </Button>
-      <Button sx={style}
+      <Button sx={style.button}
               variant="contained"
               startIcon={<Pause />}
-              disabled={!props.control.pause}
-              onClick={props.pauseAction}>
+              disabled={!control.pause}
+              onClick={pauseAction}>
         PAUSE
       </Button>
-      <Button sx={style}
+      <Button sx={style.button}
               variant="contained"
               startIcon={<Stop />}
-              disabled={!props.control.stop}
-              onClick={props.stopAction}>
+              disabled={!control.stop}
+              onClick={stopAction}>
         STOP
       </Button>
+      <FormControlLabel sx={style.switch} control={
+                <Switch
+                    checked={debugMode}
+                    onChange={modeChangeAction}
+                    inputProps={{ 'aria-label': 'controlled' }}/>}
+                label = "DEBUG MODE" />
     </div>
   )
 }
