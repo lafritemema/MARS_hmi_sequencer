@@ -2,9 +2,11 @@ import React from 'react';
 import {Button,
   ToggleButtonGroup,
   ToggleButton,
-  Stack
-  } from "@mui/material";
+  Stack,
+  StyleSheet} from "@mui/material";
 import {PlayArrow, Pause, Stop, CloudUpload} from "@mui/icons-material";
+
+
 
 function Control ({control,
     loadAction,
@@ -16,7 +18,7 @@ function Control ({control,
   
   return (
     <Stack direction="row"
-        spacing={5}>
+          spacing={2}>
       <Button variant="contained"
               startIcon={<CloudUpload />}
               disabled={!control.load}

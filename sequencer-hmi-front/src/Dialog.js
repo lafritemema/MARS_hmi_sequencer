@@ -5,7 +5,7 @@ import {Alert} from '@mui/material'
 function Dialog (props) {
   
   return (
-    <Alert
+    <Alert sx={{width:'100%'}}
       severity={props.severity}>
         {props.message}
     </Alert>

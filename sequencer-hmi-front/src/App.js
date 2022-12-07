@@ -108,19 +108,24 @@ function App(props){
             });
     }
 
-    const handleModeChange = (event, mode)=>{
-        console.log('send mode change to server');
-        fetch(`http://${ENDPOINT}/settings/mode?value=${mode}`,{method: 'POST'})
-            .then((response)=>{
-                console.log('=> request transmited to sequencer');
-            }).catch((error)=>{
-                console.log(error);
-            });
+    const handleModeChange = (event, nmode)=>{
+        if (nmode != mode && mode != null) {
+            console.log('send mode change to server');
+            fetch(`http://${ENDPOINT}/settings/mode?value=${nmode}`,{method: 'POST'})
+                .then((response)=>{
+                    console.log('=> request transmited to sequencer');
+                }).catch((error)=>{
+                    console.log(error);
+                });
+        } else {
+            console.log('send mode change to server');
+        }
     }
 
     return(
         <Stack direction="column"
-                spacing={5}>
+                spacing={5}
+                sx={{alignItems:'center'}}>
             <Control
                 control={control}
                 loadAction={handleLoad}
