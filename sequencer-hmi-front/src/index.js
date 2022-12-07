@@ -8,5 +8,5 @@ const ENDPOINT = process.env.BACKENDPOINT ?
     process.env.REACT_APP_BACKENDPOINT
 
 const root = ReactDOM
-  .createRoot(document.getElementById("app"));
+  .createRoot(document.getElementById("root"));
 root.render(<App endpoint={ENDPOINT}/>);

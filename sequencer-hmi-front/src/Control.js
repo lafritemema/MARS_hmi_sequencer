@@ -1,5 +1,9 @@
 import React from 'react';
-import {Button, FormControlLabel, Switch} from "@mui/material";
+import {Button,
+  ToggleButtonGroup,
+  ToggleButton,
+  Stack
+  } from "@mui/material";
 import {PlayArrow, Pause, Stop, CloudUpload} from "@mui/icons-material";
 
 function Control ({control,
@@ -8,57 +12,47 @@ function Control ({control,
     pauseAction,
     stopAction,
     modeChangeAction,
-    debugMode}) {
+    mode}) {
   
-  const style = {
-    button:{
-      margin: '5px'
-    },
-    switch: {
-      margin: '5px'
-    }
-  }
-
-
-
   return (
-    <div>
-      <Button sx={style.button}
-              variant="contained"
+    <Stack direction="row"
+        spacing={5}>
+      <Button variant="contained"
               startIcon={<CloudUpload />}
               disabled={!control.load}
               onClick={loadAction}>
         LOAD SEQUENCE
       </Button>
-      <Button sx={style.button}
-              variant="contained"
+      <Button variant="contained"
               startIcon={<PlayArrow />}
               disabled={!control.run}
               onClick={runAction}>
         RUN
       </Button>
-      <Button sx={style.button}
-              variant="contained"
+      <Button variant="contained"
               startIcon={<Pause />}
               disabled={!control.pause}
               onClick={pauseAction}>
         PAUSE
       </Button>
-      <Button sx={style.button}
-              variant="contained"
+      <Button variant="contained"
               startIcon={<Stop />}
               disabled={!control.stop}
               onClick={stopAction}>
         STOP
       </Button>
-      <FormControlLabel sx={style.switch} control={
-                <Switch
-                    checked={debugMode}
-                    onChange={modeChangeAction}
-                    inputProps={{ 'aria-label': 'controlled' }}/>}
-                label = "DEBUG MODE" />
-    </div>
-  )
+      <ToggleButtonGroup
+          color="primary"
+          value={mode}
+          exclusive
+          onChange={modeChangeAction}
+          aria-label="demo">
+        <ToggleButton value="demo">DEMO MODE</ToggleButton>
+        <ToggleButton value="continu">STANDARD MODE</ToggleButton>
+        <ToggleButton value="step">DEBUG MODE</ToggleButton>
+      </ToggleButtonGroup>
+    </Stack>
+  );
 }
 
 export default Control;

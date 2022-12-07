@@ -4,6 +4,7 @@ import Control from './Control';
 import Dialog from './Dialog';
 import io from "socket.io-client";
 import seqStatus from './status.json';
+import { Stack } from '@mui/material';
 
 function App(props){
 
@@ -22,7 +23,7 @@ function App(props){
     const [sequencerStatus, setSequencerStatus] = useState('disconnected');
     const [dialog, setDialog] = useState(defaultConfig.dialog);
     const [control, setControl] = useState(defaultConfig.control);
-    const [debugChecked, setDebugChecked] = useState(true);
+    const [mode, setMode] = useState('standard');
     
     useEffect(() => {
         if(socket) {
@@ -31,8 +32,7 @@ function App(props){
             });
 
             socket.on('modeUpdate', (mode)=>{
-                const isChecked = mode === 'step' ? true : false;
-                setDebugChecked(isChecked);
+                setMode(mode);
             })
 
             socket.on('connect', ()=> {
@@ -108,11 +108,9 @@ function App(props){
             });
     }
 
-    const handleModeChange = ()=>{
+    const handleModeChange = (event, mode)=>{
         console.log('send mode change to server');
-        // switch to 
-        const modeValue = debugChecked ? 'continue' : 'step';
-        fetch(`http://${ENDPOINT}/settings/mode?value=${modeValue}`,{method: 'POST'})
+        fetch(`http://${ENDPOINT}/settings/mode?value=${mode}`,{method: 'POST'})
             .then((response)=>{
                 console.log('=> request transmited to sequencer');
             }).catch((error)=>{
@@ -121,7 +119,8 @@ function App(props){
     }
 
     return(
-        <div>
+        <Stack direction="column"
+                spacing={5}>
             <Control
                 control={control}
                 loadAction={handleLoad}
@@ -129,11 +128,11 @@ function App(props){
                 pauseAction={handlePause}
                 stopAction={handleStop}
                 modeChangeAction={handleModeChange}
-                debugMode={debugChecked}/>
+                mode={mode}/>
             <Dialog 
                 severity={dialog.severity}
                 message={dialog.message} />
-        </div>
+        </Stack>
     )
 }
 
