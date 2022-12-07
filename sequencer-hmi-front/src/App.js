@@ -19,9 +19,7 @@ function App(props){
 
     const defaultConfig = seqStatus['disconnected']
     // dialog component props
-    
     const [sequencerStatus, setSequencerStatus] = useState('disconnected');
-    const [isConnected, setIsConnected] = useState(socket.connected);
     const [dialog, setDialog] = useState(defaultConfig.dialog);
     const [control, setControl] = useState(defaultConfig.control);
     const [debugChecked, setDebugChecked] = useState(true);
@@ -38,12 +36,11 @@ function App(props){
             })
 
             socket.on('connect', ()=> {
-                setIsConnected(true);
                 socket.emit('getStates');
             });
 
             socket.on('disconnect', () => {
-                setIsConnected(false);
+                setSequencerStatus('disconnected')
                 socket.connect();
             });
 
@@ -63,14 +60,6 @@ function App(props){
             }
         }
     }, []);
-
-    useEffect(()=>{
-        if (isConnected) {
-            setSequencerStatus('connected');
-        } else {
-            setSequencerStatus('disconnected');
-        }
-    }, [isConnected]);
 
     useEffect(()=>{
         const stConf = seqStatus[sequencerStatus];
